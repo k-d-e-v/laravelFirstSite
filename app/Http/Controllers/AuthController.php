@@ -23,6 +23,14 @@ class AuthController extends Controller
         ]);
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
+
+            $request->session()->regenerate();
+            return redirect()->intended('dashboard');
+
+
+
+            //I want to get logged in on the webpage
+            /*
             $user = Auth::user();
             return response()->json([
                 'user' => $user,
@@ -30,7 +38,7 @@ class AuthController extends Controller
                     'token' => $user->createToken('ApiToken')->plainTextToken,
                     'type' => 'bearer',
                 ]
-            ]);
+            ]); */
         }
 
         return response()->json([

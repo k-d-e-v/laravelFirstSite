@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,6 @@ Route::get('/register', function () {
 });
 
 
-Route::get('/csv', function () {
+Route::middleware('auth:sanctum')->get('/csv', function (Request $request) {
     return view('csv-upload');
 });

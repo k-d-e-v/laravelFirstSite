@@ -15,14 +15,10 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-//This was premade:
-/* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-}); */
-
-//My routes:
+//My public routes:
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
     Route::post('register', 'register');
     Route::post('logout', 'logout');
 });
+//My protected routes:

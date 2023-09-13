@@ -13,4 +13,10 @@ Finished creating the Login-System as a POST only REST-API. [I did use this tuto
 
 Now I want to make a simple HTML Form for the frontend to use these endpoints, but first let's see how to make the site "password-protected".
 
-I tried installing Tailwind CSS using [this tutorial](https://tailkit.com/blog/how-to-add-tailwind-css-to-your-laravel-project) and npm, but it was not displaying right with gigantic vector graphics.
+I tried installing Tailwind CSS using [this tutorial](https://tailkit.com/blog/how-to-add-tailwind-css-to-your-laravel-project) and npm, but it was not displaying right with gigantic vector graphics. In the end I just used a CDN to get it working.
+
+Next I needed to implement [protected routes but I don't know if I can get it to work with the REST-API.](https://daily-dev-tips.com/posts/protecting-our-laravel-api-with-sanctum/)
+
+[Here is a YT video for Laravel Sanctum SPA API Authentication](https://www.youtube.com/watch?v=8Uwn5M6WTe0)
+
+The official Laravel Sanctum Docs have instruction for SPA Authentication but it is hard to follow.
