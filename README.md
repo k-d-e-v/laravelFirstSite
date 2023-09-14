@@ -20,3 +20,9 @@ Next I needed to implement [protected routes but I don't know if I can get it to
 [Here is a YT video for Laravel Sanctum SPA API Authentication](https://www.youtube.com/watch?v=8Uwn5M6WTe0)
 
 The official Laravel Sanctum Docs have instruction for SPA Authentication but it is hard to follow.
+
+## Instructions to start the app:
+1. cd into the laravelFirstSite directory
+2. run "./vendor/bin/sail up"
+3. Attach shell to the sail container in VSCode
+   and run "php artisan migrate && php artisan db:seed"

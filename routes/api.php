@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +14,14 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-//My public routes:
-Route::controller(AuthController::class)->group(function () {
-    Route::post('login', 'login');
-    Route::post('register', 'register');
-    Route::post('logout', 'logout');
+Route::post('login', [UserController::class, 'login']);
+Route::post('register', [UserController::class, 'register']);
+Route::post('logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+
+Route::group(['prefix' => 'csvs', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/', [BookController::class, 'index']);
+    Route::post('add', [BookController::class, 'add']);
+    Route::get('edit/{id}', [BookController::class, 'edit']);
+    Route::post('update/{id}', [BookController::class, 'update']);
+    Route::delete('delete/{id}', [BookController::class, 'delete']);
 });
-//My protected routes:
