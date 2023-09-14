@@ -51,6 +51,8 @@ class UserController extends Controller
             $user->password = Hash::make($formFields['password']);
             $user->save();
 
+            return redirect('/');
+
             $message = 'User register successfully';
         } catch (\Illuminate\Database\QueryException $ex) {
             $message = $ex->getMessage();

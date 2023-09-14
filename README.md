@@ -21,6 +21,8 @@ Next I needed to implement [protected routes but I don't know if I can get it to
 
 The official Laravel Sanctum Docs have instruction for SPA Authentication but it is hard to follow.
 
+[In this great 4+hours YT tutorial it is shown how to add a login system](https://www.youtube.com/watch?v=MYyJ4PuL4pY) that I used as a reference and the code from the video [is in this GitHub repo.](https://github.com/bradtraversy/laragigs/blob/main/app/Http/Controllers/UserController.php)
+
 ## Instructions to start the app:
 1. cd into the laravelFirstSite directory
 2. run "./vendor/bin/sail up"

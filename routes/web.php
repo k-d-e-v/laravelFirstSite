@@ -18,6 +18,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [UserController::class, 'showwelcome'])->middleware('guest');
 Route::get('/register', [UserController::class, 'showregister'])->middleware('guest');
-Route::get('/csv', [UserController::class, 'showcsv'])->middleware('auth');
 Route::post('/login', [UserController::class, 'login']);
+Route::post('/store', [UserController::class, 'store']);
 Route::get('/logout', [UserController::class, 'logout']);
+Route::get('/csv', [UserController::class, 'showcsv'])->middleware('auth');
