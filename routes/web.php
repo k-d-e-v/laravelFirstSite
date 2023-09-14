@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +20,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/register', function () {
-    return view('register');
-});
-
-
-Route::middleware('auth:sanctum')->get('/csv', function (Request $request) {
-    return view('csv-upload');
+Route::post('/register', [AuthenticationController::class, 'register']);
+//login user
+Route::post('/login', [AuthenticationController::class, 'login']);
+//using middleware
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/csv', function (Request $request) {
+        return auth()->user();
+    });
+    Route::post('/logout', [AuthenticationController::class, 'logout']);
 });

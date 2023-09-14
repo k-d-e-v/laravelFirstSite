@@ -50,17 +50,18 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $success = true;
             $message = 'User login successfully';
+
+            $request->session()->regenerate();
+
+            redirect()->intended('csv-upload');
         } else {
             $success = false;
             $message = 'Unauthorised';
         }
 
-        // response
-        $response = [
-            'success' => $success,
-            'message' => $message,
-        ];
-        return response()->json($response);
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
     }
 
     /**
