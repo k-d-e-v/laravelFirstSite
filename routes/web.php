@@ -16,17 +16,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::post('/register', [AuthenticationController::class, 'register']);
-//login user
-Route::post('/login', [AuthenticationController::class, 'login']);
-//using middleware
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/csv', function (Request $request) {
-        return auth()->user();
-    });
-    Route::post('/logout', [AuthenticationController::class, 'logout']);
-});
+Route::get('/', [UserController::class, 'showwelcome'])->middleware('guest');
+Route::get('/register', [UserController::class, 'showregister'])->middleware('guest');
+Route::get('/dev', [UserController::class, 'showcsv'])->middleware('auth');
+Route::post('/login', [UserController::class, 'login']);

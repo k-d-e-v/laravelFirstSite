@@ -7,34 +7,60 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
     /**
-     * Register
+     * Show Welcome Screen
      */
-    public function register(Request $request)
+    public function showwelcome()
     {
+        return view('welcome');
+    }
+    /**
+     * Show Registration Page
+     */
+    public function showregister()
+    {
+        return view('register');
+    }
+    /**
+     * See the CSV Page
+     */
+    public function showcsv()
+    {
+        return view('csv');
+    }
+    /**
+     * Create new user
+     */
+    public function store(Request $request)
+    {
+        //Validate the request
+        $formFields = $request->validate([
+            'name' => ['required', 'min:3'],
+            'email' => ['required', 'email', Rule::unique('users', 'email')],
+            'password' => 'required|confirmed|min:6'
+        ]);
+
         try {
             $user = new User();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
+            $user->name = $formFields['name'];
+            $user->email = $formFields['email'];
+            $user->password = Hash::make($formFields['password']);
             $user->save();
 
-            $success = true;
             $message = 'User register successfully';
         } catch (\Illuminate\Database\QueryException $ex) {
-            $success = false;
             $message = $ex->getMessage();
         }
 
-        // response
-        $response = [
-            'success' => $success,
-            'message' => $message,
-        ];
-        return response()->json($response);
+        // Login
+        auth()->login($user);
+
+        //return redirect('/csv')->with('message', 'User created and logged in');
+        return view('csv');
     }
 
     /**
@@ -42,21 +68,15 @@ class UserController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
-        ];
+        $formFields = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => 'required'
+        ]);
 
-        if (Auth::attempt($credentials)) {
-            $success = true;
-            $message = 'User login successfully';
-
+        if (Auth::attempt($formFields)) {
             $request->session()->regenerate();
 
-            redirect()->intended('csv-upload');
-        } else {
-            $success = false;
-            $message = 'Unauthorised';
+            return redirect('/csv')->with('message', 'You are now logged in!');
         }
 
         return back()->withErrors([
@@ -67,22 +87,13 @@ class UserController extends Controller
     /**
      * Logout
      */
-    public function logout()
+    public function logout(Request $request)
     {
-        try {
-            Session::flush();
-            $success = true;
-            $message = 'Successfully logged out';
-        } catch (\Illuminate\Database\QueryException $ex) {
-            $success = false;
-            $message = $ex->getMessage();
-        }
+        auth()->logout();
 
-        // response
-        $response = [
-            'success' => $success,
-            'message' => $message,
-        ];
-        return response()->json($response);
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('message', 'You have been logged out!');
     }
 }
