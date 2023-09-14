@@ -59,8 +59,8 @@ class UserController extends Controller
         // Login
         auth()->login($user);
 
-        //return redirect('/csv')->with('message', 'User created and logged in');
-        return view('csv');
+        //return view('csv');
+        return redirect('/csv')->with('message', 'User created and logged in');
     }
 
     /**
