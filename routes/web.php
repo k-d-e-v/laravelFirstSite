@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\CSVController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +22,4 @@ Route::post('/login', [UserController::class, 'login']);
 Route::post('/store', [UserController::class, 'store']);
 Route::get('/logout', [UserController::class, 'logout']);
 Route::get('/csv', [UserController::class, 'showcsv'])->middleware('auth');
+Route::post('/addcsvfile', [CSVController::class, 'add'])->middleware('auth');

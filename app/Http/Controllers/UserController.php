@@ -37,31 +37,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //Validate the request
         $formFields = $request->validate([
             'name' => ['required', 'min:3'],
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'password' => 'required|confirmed|min:6'
         ]);
 
-        try {
-            $user = new User();
-            $user->name = $formFields['name'];
-            $user->email = $formFields['email'];
-            $user->password = Hash::make($formFields['password']);
-            $user->save();
+        // Hash Password
+        $formFields['password'] = bcrypt($formFields['password']);
 
-            return redirect('/');
-
-            $message = 'User register successfully';
-        } catch (\Illuminate\Database\QueryException $ex) {
-            $message = $ex->getMessage();
-        }
+        // Create User
+        $user = User::create($formFields);
 
         // Login
         auth()->login($user);
 
-        //return view('csv');
         return redirect('/csv')->with('message', 'User created and logged in');
     }
 

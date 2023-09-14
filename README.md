@@ -23,8 +23,13 @@ The official Laravel Sanctum Docs have instruction for SPA Authentication but it
 
 [In this great 4+hours YT tutorial it is shown how to add a login system](https://www.youtube.com/watch?v=MYyJ4PuL4pY) that I used as a reference and the code from the video [is in this GitHub repo.](https://github.com/bradtraversy/laragigs/blob/main/app/Http/Controllers/UserController.php)
 
+There is a Laravel Excel Package to make it easier for handling spreadsheets, but that requiers additional setting up.
+
 ## Instructions to start the app:
 1. cd into the laravelFirstSite directory
 2. run "./vendor/bin/sail up"
 3. Attach shell to the sail container in VSCode
    and run "php artisan migrate && php artisan db:seed"
+
+## Bugs:
+After a while it always redirects to localhost/home. Temp fix is to use private browser tab and load localhost again.

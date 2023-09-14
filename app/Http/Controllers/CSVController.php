@@ -17,14 +17,23 @@ class CSVController extends Controller
     // add CSV
     public function add(Request $request)
     {
-        $csv = new CSV([
-            'companyname' => $request->companyname,
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
-            'email' => $request->email,
-            'phonenumber' => $request->phonenumber
-        ]);
-        $csv->save();
+        $file = $request->fileupload;
+        $header = fgetcsv($file);
+        $users = [];
+        while ($row = fgetcsv($file)) {
+            $users[] = array_combine($header, $row);
+        }
+
+        foreach ($users as $u) { //Caution: I am just guessing if this will work
+            $csv = new CSV([
+                'companyname' => $u[0],
+                'firstname' => $u[1],
+                'lastname' => $u[2],
+                'email' => $u[3],
+                'phonenumber' => $u[4]
+            ]);
+            $csv->save();
+        }
 
         return response()->json('The CSV has been successfully added');
     }

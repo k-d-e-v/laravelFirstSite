@@ -9,5 +9,5 @@ class CSV extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['companyname', '´firstname', 'lastname', 'email', 'phonenumber'];
+    protected $fillable = ['companyname', 'firstname', 'lastname', 'email', 'phonenumber'];
 }
