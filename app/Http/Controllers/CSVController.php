@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class CSVController extends Controller
 {
+    // read CSV and return an array
+    private function readCSV($file)
+    {
+        return array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $file));
+    }
     // all CSV
     public function index()
     {
@@ -17,21 +22,13 @@ class CSVController extends Controller
     // add CSV
     public function add(Request $request)
     {
-        $file = $request->fileupload;
-        $header = fgetcsv($file);
-        $users = [];
-        while ($row = fgetcsv($file)) {
-            $users[] = array_combine($header, $row);
-        }
+        $file = CSVController::readCSV($request->file('fileupload')->get());
 
-        foreach ($users as $u) { //Caution: I am just guessing if this will work
-            $csv = new CSV([
-                'companyname' => $u[0],
-                'firstname' => $u[1],
-                'lastname' => $u[2],
-                'email' => $u[3],
-                'phonenumber' => $u[4]
-            ]);
+        //Remove the header
+        array_shift($file);
+
+        foreach ($file as $item) {
+            $csv = new CSV([$item[0], $item[1], $item[2], $item[3], $item[4]]);
             $csv->save();
         }
 

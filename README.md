@@ -32,4 +32,4 @@ There is a Laravel Excel Package to make it easier for handling spreadsheets, bu
    and run "php artisan migrate && php artisan db:seed"
 
 ## Bugs:
-After a while it always redirects to localhost/home. Temp fix is to use private browser tab and load localhost again.
+~~After a while it always redirects to localhost/home.~~ FIX: Edit the "RedirectIfAuthenticated.php"
