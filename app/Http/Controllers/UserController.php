@@ -38,10 +38,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $formFields = $request->validate([
-            'name' => ['required', 'min:3'],
-            'email' => ['required', 'email', Rule::unique('users', 'email')],
-            'password' => 'required|confirmed|min:6'
+            'email' => 'required|email|unique:users,email',
+            'name' => 'required|min:3',
+            'password' => 'required|min:6' //confirmed caused a bug
         ]);
+        //dd($formFields);
 
         // Hash Password
         $formFields['password'] = bcrypt($formFields['password']);
