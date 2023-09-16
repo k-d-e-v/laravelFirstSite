@@ -35,7 +35,13 @@ class CSVController extends Controller
 
         foreach ($file as $item) {
             if ($item[0] && $item[1] && $item[2] && $item[3] && $item[4]) { //Ignore rows that are unpopulated
-                $csv = new CSV([$item[0], $item[1], $item[2], $item[3], $item[4]]);
+                $csv = CSV::create([
+                    'companyname' => $item[0],
+                    'firstname' => $item[1],
+                    'lastname' => $item[2],
+                    'email' => $item[3],
+                    'phonenumber' => $item[4]
+                ]);
                 $csv->save();
             }
         }
