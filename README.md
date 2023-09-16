@@ -33,3 +33,4 @@ There is a Laravel Excel Package to make it easier for handling spreadsheets, bu
 
 ## Bugs:
 ~~After a while it always redirects to localhost/home.~~ FIX: Edit the "RedirectIfAuthenticated.php"
+After a while a "Too many redirects" problem can occur.
