@@ -22,14 +22,22 @@ class CSVController extends Controller
     // add CSV
     public function add(Request $request)
     {
+        if (!$request->validate([
+            'fileupload' => 'required|file|mimes:csv|max:1280', // 12,8MB max
+        ])) dd($request); //TODO: Couldn't get a Exception or dd() to display here, but a good csv file will go through
+
         $file = CSVController::readCSV($request->file('fileupload')->get());
 
         //Remove the header
         array_shift($file);
 
+        //dd($file);
+
         foreach ($file as $item) {
-            $csv = new CSV([$item[0], $item[1], $item[2], $item[3], $item[4]]);
-            $csv->save();
+            if ($item[0] && $item[1] && $item[2] && $item[3] && $item[4]) { //Ignore rows that are unpopulated
+                $csv = new CSV([$item[0], $item[1], $item[2], $item[3], $item[4]]);
+                $csv->save();
+            }
         }
 
         return response()->json('The CSV has been successfully added');
